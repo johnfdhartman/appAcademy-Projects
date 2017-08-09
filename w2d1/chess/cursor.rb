@@ -32,8 +32,7 @@ MOVES = {
 
 class Cursor
 
-  attr_reader :cursor_pos, :board
-  attr_accessor :selected
+  attr_reader :cursor_pos, :board, :selected
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
@@ -44,6 +43,14 @@ class Cursor
   def get_input
     key = KEYMAP[read_char]
     handle_key(key)
+  end
+
+  def select_tile
+    @selected = true unless @selected
+  end
+
+  def unselect_tile
+    @select = false if @selected
   end
 
   private
@@ -80,10 +87,11 @@ class Cursor
   def handle_key(key)
     case key
     when :return, :space
+      select_tile
       @cursor_pos
-      @selected = true
     when :left, :right, :up, :down
       update_pos(MOVES[key])
+      nil
     when :ctrl_c
       Process.exit
     end

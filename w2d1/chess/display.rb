@@ -10,7 +10,10 @@ class Display
     @cursor = Cursor.new([0,0], board)
   end
 
-  def render
+  def render(player_colour)
+    system 'clear'
+    #p @board.checkmate?(:red)
+    puts "#{player_colour}'s turn".colorize(:color => player_colour)
     @board.grid.each.with_index do |row, idx_1|
       row.each.with_index do |el, idx_2|
         print el.icon.colorize(:color => el.colour,
@@ -20,14 +23,20 @@ class Display
     end
   end
 
-  def get_move
-    moved = false
-    @cursor.selected = false
-    until moved
-      @cursor.get_input
-      system 'clear'
-      render
+  def get_move(player_colour)
+    #outputs an array with two positions: the piece the player
+    #wants to move, and the place they want to move it
+    move_choice = []
+    @cursor.unselect_tile
+    until move_choice.length == 2
+      p @board.checkmate?(:red)
+      p "move_choice #{move_choice}"
+      input = @cursor.get_input
+      move_choice << input if input
+      render(player_colour)
     end
+    p move_choice
+    move_choice
   end
 
   def tile_colour(row, col)
@@ -39,4 +48,5 @@ class Display
       :black
     end
   end
+
 end
