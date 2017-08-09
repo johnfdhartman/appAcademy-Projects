@@ -18,13 +18,13 @@ class Game
       @current_player.get_move(@board)
       # p "#{@current_player.colour}'s usable_pieces:
       #   #{@board.checkmate?(@current_player.colour)}"
-      if @board.checkmate?(@current_player.colour)[1]
+      if @board.checkmate?(@current_player.colour)
         @game_over = true
       else
         switch_player
       end
     end
-    #p "#{@current_player.colour} wins! hooray"
+    p "#{@current_player.colour} wins! hooray"
 
   end
 

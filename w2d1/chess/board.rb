@@ -49,8 +49,7 @@ class Board
       origin, destination = @display.get_move(player_colour)
       piece = self[origin]
       if piece.colour == player_colour &&
-                piece.valid_moves(grid,origin).include?(destination) &&
-                !move_into_check?(origin, destination)
+                piece.non_checking_moves(self,origin).include?(destination)
         self[origin] = NullPiece.instance
         self[destination] = piece
         moved = true
@@ -67,8 +66,7 @@ class Board
       piece, pos = piece_pos
       piece.non_checking_moves(self, pos).length > 0
     end
-    [pieces_pos[0][0].non_checking_moves(self, pieces_pos[0][1]),
-    pieces_pos.length == 0]
+    pieces_pos.length == 0
   end
 
   def [](pos)

@@ -143,7 +143,7 @@ class Pawn < Piece
     moves = @normal_offsets.map do |offset|
       [offset[0] + pos[0], offset[1] + pos[1]]
     end
-    moves.select do |move|
+    moves.select! do |move|
       inside_bounds?(move) &&
       grid[move[0]][move[1]].colour.nil?
     end
